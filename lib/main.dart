@@ -1,3 +1,5 @@
+import 'package:chugli/core/theme.dart';
+import 'package:chugli/message_page.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -12,10 +14,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(),
-      home: const Scaffold(
-        body: Text("Chugli App"),
-      ),
+      theme: AppTheme.darkTheme,
+      home: const MessagePage(),
     );
   }
 }

@@ -1,5 +1,5 @@
+import 'package:chugli/chat_page.dart';
 import 'package:chugli/core/theme.dart';
-import 'package:chugli/message_page.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: AppTheme.darkTheme,
-      home: const MessagePage(),
+      home: const ChatPage(),
     );
   }
 }

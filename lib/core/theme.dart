@@ -7,7 +7,10 @@ class AppTheme {
       primaryColor: Colors.white,
       scaffoldBackgroundColor: const Color(0xff1b202d),
       textTheme: TextTheme(
-        titleMedium: GoogleFonts.alegreyaSans(),
+        titleMedium: GoogleFonts.alegreyaSans(
+          fontSize: FontSizes.medium,
+          color: Colors.white,
+        ),
         titleLarge: GoogleFonts.alegreyaSans(
           fontSize: FontSizes.large,
           color: Colors.white,

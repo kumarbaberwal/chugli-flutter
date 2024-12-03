@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:chugli/core/theme.dart';
 import 'package:flutter/material.dart';
 
@@ -22,8 +23,9 @@ class ChatPage extends StatelessWidget {
         title: Row(
           children: [
             const CircleAvatar(
-              backgroundImage: NetworkImage(
-                "https://placehold.co/150",
+              backgroundImage: CachedNetworkImageProvider(
+                "https://media.istockphoto.com/id/1147544807/vector/thumbnail-image-vector-graphic.jpg?s=612x612&w=0&k=20&c=rnCKVbdxqkjlcs3xH87-9gocETqpspHFXu5dIGB4wuM=",
+                scale: 1.0,
               ),
             ),
             const SizedBox(

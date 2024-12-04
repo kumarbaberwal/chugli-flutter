@@ -42,7 +42,7 @@ class _RegisterPageState extends State<RegisterPage> {
               ),
               AuthInputFields(
                 hintText: "Password",
-                iconData: Icons.password,
+                iconData: Icons.lock,
                 controller: _passwordController,
                 isPassword: true,
               ),

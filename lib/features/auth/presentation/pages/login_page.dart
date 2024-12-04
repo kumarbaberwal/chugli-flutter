@@ -34,7 +34,7 @@ class _LoginPageState extends State<LoginPage> {
               ),
               AuthInputFields(
                 hintText: "Password",
-                iconData: Icons.password,
+                iconData: Icons.lock,
                 controller: _passwordController,
                 isPassword: true,
               ),

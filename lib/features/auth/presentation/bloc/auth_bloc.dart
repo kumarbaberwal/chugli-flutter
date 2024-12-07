@@ -9,7 +9,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final FlutterSecureStorage _storage = const FlutterSecureStorage();
   final RegisterUseCase registerUseCase;
   final LoginUseCase loginUseCase;
-  AuthBloc(this.registerUseCase, this.loginUseCase) : super(AuthInitial()) {
+  AuthBloc({required this.registerUseCase, required this.loginUseCase}) : super(AuthInitial()) {
     on<LoginEvent>(_onLogin);
     on<RegisterEvent>(_onRegister);
   }
@@ -17,8 +17,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   Future<void> _onLogin(LoginEvent event, Emitter<AuthState> emit) async {
     emit(AuthLoading());
     try {
-      await loginUseCase(event.email, event.password);
-      await _storage.write(key: 'token', value: 'user.token');
+      final user = await loginUseCase(event.email, event.password);
+      await _storage.write(key: 'token', value: user.token);
       emit(AuthSuccess(message: "Registration successful"));
     } catch (e) {
       emit(AuthFailure(error: "Registration failed"));
@@ -28,7 +28,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   Future<void> _onRegister(RegisterEvent event, Emitter<AuthState> emit) async {
     emit(AuthLoading());
     try {
-      await registerUseCase(event.username, event.email, event.password);
+      final user =
+          await registerUseCase(event.username, event.email, event.password);
+      await _storage.write(key: 'token', value: user.token);
       emit(AuthSuccess(message: "Registration successful"));
     } catch (e) {
       emit(AuthFailure(error: "Registration failed"));

@@ -1,9 +1,19 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:chugli/core/theme.dart';
+import 'package:chugli/features/conversation/presentation/bloc/conversations_bloc.dart';
+import 'package:chugli/features/conversation/presentation/bloc/conversations_event.dart';
+import 'package:chugli/features/conversation/presentation/bloc/conversations_state.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-class MessagePage extends StatelessWidget {
-  const MessagePage({super.key});
+class ConversationPage extends StatefulWidget {
+  const ConversationPage({super.key});
 
+  @override
+  State<ConversationPage> createState() => _ConversationPageState();
+}
+
+class _ConversationPageState extends State<ConversationPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -64,15 +74,33 @@ class MessagePage extends StatelessWidget {
                   topRight: Radius.circular(50),
                 ),
               ),
-              child: ListView(
-                children: [
-                  _buildMessageTile("Kumar", "Hii", "16:30"),
-                  _buildMessageTile("Kumar", "Hii", "16:30"),
-                  _buildMessageTile("Kumar", "Hii", "16:30"),
-                  _buildMessageTile("Kumar", "Hii", "16:30"),
-                  _buildMessageTile("Kumar", "Hii", "16:30"),
-                  _buildMessageTile("Kumar", "Hii", "16:30"),
-                ],
+              child: BlocBuilder<ConversationsBloc, ConversationsState>(
+                builder: (context, state) {
+                  if (state is ConversationsLoading) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  } else if (state is ConversationsLoaded) {
+                    return ListView.builder(
+                      itemCount: state.conversations.length,
+                      itemBuilder: (context, index) {
+                        final conversations = state.conversations[index];
+                        return _buildMessageTile(
+                          conversations.participantName,
+                          conversations.lastMessage,
+                          conversations.lastMessageTime.toString().split('.')[0],
+                        );
+                      },
+                    );
+                  } else if (state is ConversationsError) {
+                    return Center(
+                      child: Text(state.error),
+                    );
+                  }
+                  return const Center(
+                    child: Text('No Conversation Found'),
+                  );
+                },
               ),
             ),
           )
@@ -81,11 +109,20 @@ class MessagePage extends StatelessWidget {
     );
   }
 
+  @override
+  void initState() {
+    super.initState();
+    BlocProvider.of<ConversationsBloc>(context).add(FetchConvesationsEvent());
+  }
+
   Widget _buildMessageTile(String name, String message, String time) {
     return ListTile(
       contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       leading: const CircleAvatar(
-        backgroundImage: NetworkImage("https://placehold.co/400"),
+        backgroundImage: CachedNetworkImageProvider(
+          "https://media.istockphoto.com/id/1147544807/vector/thumbnail-image-vector-graphic.jpg?s=612x612&w=0&k=20&c=rnCKVbdxqkjlcs3xH87-9gocETqpspHFXu5dIGB4wuM=",
+          scale: 1.0,
+        ),
         radius: 30,
       ),
       title: Text(
@@ -98,7 +135,7 @@ class MessagePage extends StatelessWidget {
         style: const TextStyle(color: Colors.grey),
       ),
       trailing: Text(
-        time,
+        time.toString(),
         style: const TextStyle(color: Colors.grey),
       ),
     );
@@ -110,7 +147,10 @@ class MessagePage extends StatelessWidget {
       child: Column(
         children: [
           const CircleAvatar(
-            backgroundImage: NetworkImage('https://placehold.co/400'),
+            backgroundImage: CachedNetworkImageProvider(
+              "https://media.istockphoto.com/id/1147544807/vector/thumbnail-image-vector-graphic.jpg?s=612x612&w=0&k=20&c=rnCKVbdxqkjlcs3xH87-9gocETqpspHFXu5dIGB4wuM=",
+              scale: 1.0,
+            ),
             radius: 30,
           ),
           const SizedBox(

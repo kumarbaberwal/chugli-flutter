@@ -1,7 +1,11 @@
+import 'package:chugli/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:chugli/features/auth/presentation/bloc/auth_event.dart';
+import 'package:chugli/features/auth/presentation/bloc/auth_state.dart';
 import 'package:chugli/features/auth/presentation/widgets/auth_button.dart';
 import 'package:chugli/features/auth/presentation/widgets/auth_input_fields.dart';
 import 'package:chugli/features/auth/presentation/widgets/login_prompt.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -49,15 +53,42 @@ class _RegisterPageState extends State<RegisterPage> {
               const SizedBox(
                 height: 20,
               ),
-              AuthButton(
-                text: "Register",
-                onPressed: () {},
+              BlocConsumer<AuthBloc, AuthState>(
+                builder: (context, state) {
+                  if (state is AuthLoading) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                  return AuthButton(
+                    text: "Register",
+                    onPressed: _onRegister,
+                  );
+                },
+                listener: (context, state) {
+                  if (state is AuthSuccess) {
+                    Navigator.pushNamedAndRemoveUntil(
+                      context,
+                      '/conversationPage',
+                      (route) => false,
+                    );
+                  }
+                  if (state is AuthFailure) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(state.error),
+                      ),
+                    );
+                  }
+                },
               ),
               const SizedBox(
                 height: 20,
               ),
               LoginPrompt(
-                onTap: () {},
+                onTap: () {
+                  Navigator.pushNamed(context, '/login');
+                },
                 title: "Already have an account? ",
                 subtitle: "Click here to login",
               )
@@ -74,5 +105,15 @@ class _RegisterPageState extends State<RegisterPage> {
     _emailController.dispose();
     _passwordController.dispose();
     super.dispose();
+  }
+
+  void _onRegister() {
+    BlocProvider.of<AuthBloc>(context).add(
+      RegisterEvent(
+        username: _usernameController.text,
+        email: _emailController.text,
+        password: _passwordController.text,
+      ),
+    );
   }
 }

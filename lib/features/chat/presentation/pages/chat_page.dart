@@ -1,9 +1,35 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:chugli/core/theme.dart';
+import 'package:chugli/features/chat/presentation/bloc/chat_event.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-class ChatPage extends StatelessWidget {
-  const ChatPage({super.key});
+import '../bloc/chat_bloc.dart';
+
+class ChatPage extends StatefulWidget {
+  final String conversationId;
+  const ChatPage({
+    super.key,
+    required this.conversationId,
+  });
+
+  @override
+  State<ChatPage> createState() => _ChatPageState();
+}
+
+class _ChatPageState extends State<ChatPage> {
+  final TextEditingController _messageController = TextEditingController();
+  final _storage = FlutterSecureStorage();
+  String userId = '';
+
+  @override
+  void initState() {
+    super.initState();
+    BlocProvider.of<ChatBloc>(context)
+        .add(LoadMessagesEvent(conversationId: widget.conversationId));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,8 +71,8 @@ class ChatPage extends StatelessWidget {
               // padding: const EdgeInsets.all(20),
               children: [
                 _buildReceivedMessage(context, "Hi.. I am Kumar Here"),
-                _buildSentMessage(context, "Hi.. This is Kavya Here..."),
-                _buildReceivedMessage(context, "How are you Kavya Roy..?"),
+                _buildSentMessage(context, "Hi.. This is Bhavya Here..."),
+                _buildReceivedMessage(context, "How are you Bhavya Jha..?"),
                 _buildSentMessage(context, "I am Fine Nitesh"),
                 _buildReceivedMessage(context, "So.. What are you doing?"),
                 _buildSentMessage(context, "Nothing... Kuch kaam tha kya?"),

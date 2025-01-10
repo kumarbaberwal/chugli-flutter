@@ -1,4 +1,4 @@
-import 'package:chugli/chat_page.dart';
+import 'package:chugli/features/chat/presentation/pages/chat_page.dart';
 import 'package:chugli/core/theme.dart';
 import 'package:chugli/features/auth/data/datasources/auth_remote_data_source.dart';
 import 'package:chugli/features/auth/data/repositories/auth_repository_impl.dart';

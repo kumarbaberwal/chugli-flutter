@@ -2,6 +2,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:chugli/core/theme.dart';
 import 'package:chugli/features/chat/presentation/bloc/chat_event.dart';
+import 'package:chugli/features/chat/presentation/bloc/chat_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -10,9 +11,11 @@ import '../bloc/chat_bloc.dart';
 
 class ChatPage extends StatefulWidget {
   final String conversationId;
+  final String mate;
   const ChatPage({
     super.key,
     required this.conversationId,
+    required this.mate,
   });
 
   @override
@@ -23,13 +26,6 @@ class _ChatPageState extends State<ChatPage> {
   final TextEditingController _messageController = TextEditingController();
   final _storage = FlutterSecureStorage();
   String userId = '';
-
-  @override
-  void initState() {
-    super.initState();
-    BlocProvider.of<ChatBloc>(context)
-        .add(LoadMessagesEvent(conversationId: widget.conversationId));
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +54,7 @@ class _ChatPageState extends State<ChatPage> {
               width: 10,
             ),
             Text(
-              "Kumar",
+              widget.mate,
               style: Theme.of(context).textTheme.titleMedium,
             )
           ],
@@ -67,25 +63,62 @@ class _ChatPageState extends State<ChatPage> {
       body: Column(
         children: [
           Expanded(
-            child: ListView(
-              // padding: const EdgeInsets.all(20),
-              children: [
-                _buildReceivedMessage(context, "Hi.. I am Kumar Here"),
-                _buildSentMessage(context, "Hi.. This is Bhavya Here..."),
-                _buildReceivedMessage(context, "How are you Bhavya Jha..?"),
-                _buildSentMessage(context, "I am Fine Nitesh"),
-                _buildReceivedMessage(context, "So.. What are you doing?"),
-                _buildSentMessage(context, "Nothing... Kuch kaam tha kya?"),
-                _buildReceivedMessage(
-                    context, "Arey Nahi aise hi preshan kr rha hu 😂"),
-                _buildSentMessage(context, "Krke to dikha muh tod dungi.. 😁"),
-              ],
+            child: BlocBuilder<ChatBloc, ChatState>(
+              builder: (context, state) {
+                if (state is ChatLoadingState) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                } else if (state is ChatLoadedState) {
+                  return ListView.builder(
+                    itemBuilder: (context, index) {
+                      final message = state.messages[index];
+                      final isSentMessage = message.senderId == userId;
+                      if (isSentMessage) {
+                        return _buildSentMessage(context, message.content);
+                      } else {
+                        return _buildReceivedMessage(context, message.content);
+                      }
+                    },
+                    padding: EdgeInsets.all(20),
+                    itemCount: state.messages.length,
+                  );
+                } else if (state is ChatErrorState) {
+                  return Center(
+                    child: Text(state.message),
+                  );
+                }
+                return Center(
+                  child: Text('No messages found'),
+                );
+              },
             ),
           ),
           _buildMessageInput(),
         ],
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _messageController.dispose();
+    super.dispose();
+  }
+
+  Future<void> fetchUserId() async {
+    userId = await _storage.read(key: 'userId') ?? '';
+    setState(() {
+      userId = userId;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    BlocProvider.of<ChatBloc>(context)
+        .add(LoadMessagesEvent(conversationId: widget.conversationId));
+    fetchUserId();
   }
 
   Widget _buildMessageInput() {
@@ -107,8 +140,9 @@ class _ChatPageState extends State<ChatPage> {
           const SizedBox(
             width: 10,
           ),
-          const Expanded(
+          Expanded(
             child: TextField(
+              controller: _messageController,
               decoration: InputDecoration(
                 border: InputBorder.none,
                 hintText: "Message",
@@ -121,11 +155,11 @@ class _ChatPageState extends State<ChatPage> {
             width: 10,
           ),
           GestureDetector(
+            onTap: _sendMessage,
             child: const Icon(
               Icons.send,
               color: Colors.grey,
             ),
-            onTap: () {},
           )
         ],
       ),
@@ -166,5 +200,16 @@ class _ChatPageState extends State<ChatPage> {
         ),
       ),
     );
+  }
+
+  void _sendMessage() {
+    final String content = _messageController.text;
+    if (content.isNotEmpty) {
+      BlocProvider.of<ChatBloc>(context).add(SendMessageEvent(
+        conversationId: widget.conversationId,
+        content: content,
+      ));
+      _messageController.clear();
+    }
   }
 }

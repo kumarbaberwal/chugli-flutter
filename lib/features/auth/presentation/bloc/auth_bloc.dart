@@ -19,6 +19,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     try {
       final user = await loginUseCase(event.email, event.password);
       await _storage.write(key: 'token', value: user.token);
+      await _storage.write(key: 'userId', value: user.id);
       emit(AuthSuccess(message: "Registration successful"));
     } catch (e) {
       emit(AuthFailure(error: "Registration failed"));
@@ -31,6 +32,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       final user =
           await registerUseCase(event.username, event.email, event.password);
       await _storage.write(key: 'token', value: user.token);
+      await _storage.write(key: 'userId', value: user.id);
       emit(AuthSuccess(message: "Registration successful"));
     } catch (e) {
       emit(AuthFailure(error: "Registration failed"));

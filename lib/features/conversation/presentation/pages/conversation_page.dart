@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:chugli/core/theme.dart';
+import 'package:chugli/features/chat/presentation/pages/chat_page.dart';
 import 'package:chugli/features/conversation/presentation/bloc/conversations_bloc.dart';
 import 'package:chugli/features/conversation/presentation/bloc/conversations_event.dart';
 import 'package:chugli/features/conversation/presentation/bloc/conversations_state.dart';
@@ -85,10 +86,24 @@ class _ConversationPageState extends State<ConversationPage> {
                       itemCount: state.conversations.length,
                       itemBuilder: (context, index) {
                         final conversations = state.conversations[index];
-                        return _buildMessageTile(
-                          conversations.participantName,
-                          conversations.lastMessage,
-                          conversations.lastMessageTime.toString().split('.')[0],
+                        return GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => ChatPage(
+                                    conversationId: conversations.id,
+                                    mate: conversations.participantName),
+                              ),
+                            );
+                          },
+                          child: _buildMessageTile(
+                            conversations.participantName,
+                            conversations.lastMessage,
+                            conversations.lastMessageTime
+                                .toString()
+                                .split('.')[0],
+                          ),
                         );
                       },
                     );

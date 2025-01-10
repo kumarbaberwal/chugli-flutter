@@ -1,4 +1,3 @@
-import 'package:chugli/features/chat/presentation/pages/chat_page.dart';
 import 'package:chugli/core/theme.dart';
 import 'package:chugli/features/auth/data/datasources/auth_remote_data_source.dart';
 import 'package:chugli/features/auth/data/repositories/auth_repository_impl.dart';
@@ -7,6 +6,10 @@ import 'package:chugli/features/auth/domain/usecases/register_use_case.dart';
 import 'package:chugli/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:chugli/features/auth/presentation/pages/login_page.dart';
 import 'package:chugli/features/auth/presentation/pages/register_page.dart';
+import 'package:chugli/features/chat/data/datasources/messages_remote_data_source.dart';
+import 'package:chugli/features/chat/data/repositories/message_repository_impl.dart';
+import 'package:chugli/features/chat/domain/usecases/fetch_messages_use_case.dart';
+import 'package:chugli/features/chat/presentation/bloc/chat_bloc.dart';
 import 'package:chugli/features/conversation/data/datasources/conversation_remote_data_source.dart';
 import 'package:chugli/features/conversation/data/repositories/conversation_repository_impl.dart';
 import 'package:chugli/features/conversation/domain/usecases/fetch_conversations_use_case.dart';
@@ -16,25 +19,36 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 void main() {
+  final authRepository = AuthRepositoryImpl(
+    authRemoteDataSource: AuthRemoteDataSource(),
+  );
+  final conversationRepository = ConversationRepositoryImpl(
+    conversationRemoteDataSource: ConversationRemoteDataSource(),
+  );
+  final messageRepository = MessageRepositoryImpl(
+    messagesRemoteDataSource: MessagesRemoteDataSource(),
+  );
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(MyApp(
-    authRepositoryImpl: AuthRepositoryImpl(
-      authRemoteDataSource: AuthRemoteDataSource(),
+  runApp(
+    MyApp(
+      authRepositoryImpl: authRepository,
+      conversationRepositoryImpl: conversationRepository,
+      messageRepositoryImpl: messageRepository,
     ),
-    conversationRepositoryImpl: ConversationRepositoryImpl(
-      conversationRemoteDataSource: ConversationRemoteDataSource(),
-    ),
-  ));
+  );
 }
 
 class MyApp extends StatelessWidget {
   final AuthRepositoryImpl authRepositoryImpl;
   final ConversationRepositoryImpl conversationRepositoryImpl;
+  final MessageRepositoryImpl messageRepositoryImpl;
 
-  const MyApp(
-      {super.key,
-      required this.authRepositoryImpl,
-      required this.conversationRepositoryImpl});
+  const MyApp({
+    super.key,
+    required this.authRepositoryImpl,
+    required this.conversationRepositoryImpl,
+    required this.messageRepositoryImpl,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -52,6 +66,12 @@ class MyApp extends StatelessWidget {
                 repository: conversationRepositoryImpl),
           ),
         ),
+        BlocProvider(
+          create: (context) => ChatBloc(
+            fetchMessagesUseCase:
+                FetchMessagesUseCase(messageRepository: messageRepositoryImpl),
+          ),
+        )
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -60,7 +80,6 @@ class MyApp extends StatelessWidget {
         routes: {
           '/login': (_) => const LoginPage(),
           '/register': (_) => const RegisterPage(),
-          '/chatPage': (_) => const ChatPage(),
           '/conversationPage': (_) => const ConversationPage(),
         },
       ),

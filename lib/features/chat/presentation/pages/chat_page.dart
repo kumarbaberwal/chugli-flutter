@@ -1,4 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:developer';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:chugli/core/theme.dart';
 import 'package:chugli/features/chat/presentation/bloc/chat_event.dart';
@@ -205,6 +207,8 @@ class _ChatPageState extends State<ChatPage> {
   void _sendMessage() {
     final String content = _messageController.text;
     if (content.isNotEmpty) {
+      log(widget.conversationId);
+      log(content);
       BlocProvider.of<ChatBloc>(context).add(SendMessageEvent(
         conversationId: widget.conversationId,
         content: content,

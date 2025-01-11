@@ -1,4 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:chugli/core/socket_service.dart';
@@ -29,11 +30,20 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
       _messages.addAll(message);
       emit(ChatLoadedState(messages: List.from(_messages)));
 
-      _socketService.socket.emit('joinConversation', event.conversationId);
-      _socketService.socket.emit('newMessage', (data) {
-        log('Step 1 - receive : $data');
-        add(ReceiveMessageEvent(message: data));
-      });
+      // _socketService.socket.emit('joinConversation', event.conversationId);
+      // _socketService.socket.on('newMessage', (data) {
+      //   log('Step 1 - receive : $data');
+      //   add(ReceiveMessageEvent(message: data));
+      // });
+
+      // Add listener only if it doesn't already exist
+      if (!_socketService.socket.hasListeners('newMessage')) {
+        _socketService.socket.emit('joinConversation', event.conversationId);
+        _socketService.socket.on('newMessage', (data) {
+          log('Step 1 - receive : $data');
+          add(ReceiveMessageEvent(message: data));
+        });
+      }
     } catch (e) {
       emit(ChatErrorState(message: e.toString()));
     }
@@ -62,6 +72,8 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
       'content': event.content,
       'senderId': userId,
     };
+
+    log(jsonEncode(newMessage));
 
     _socketService.socket.emit('sendMessage', newMessage);
   }

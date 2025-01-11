@@ -1,3 +1,4 @@
+import 'package:chugli/core/socket_service.dart';
 import 'package:chugli/core/theme.dart';
 import 'package:chugli/features/auth/data/datasources/auth_remote_data_source.dart';
 import 'package:chugli/features/auth/data/repositories/auth_repository_impl.dart';
@@ -18,7 +19,9 @@ import 'package:chugli/features/conversation/presentation/pages/conversation_pag
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-void main() {
+void main() async {
+  final socketService = SocketService();
+  await socketService.initSocket();
   final authRepository = AuthRepositoryImpl(
     authRemoteDataSource: AuthRemoteDataSource(),
   );

@@ -172,7 +172,7 @@ class _ChatPageState extends State<ChatPage> {
     return Align(
       alignment: Alignment.centerLeft,
       child: Container(
-        margin: const EdgeInsets.only(left: 30, top: 5, bottom: 5),
+        margin: const EdgeInsets.only(right: 30, top: 5, bottom: 5),
         padding: const EdgeInsets.all(15),
         decoration: BoxDecoration(
           color: DefaultColors.receiverMessage,
@@ -190,7 +190,7 @@ class _ChatPageState extends State<ChatPage> {
     return Align(
       alignment: Alignment.centerRight,
       child: Container(
-        margin: const EdgeInsets.only(right: 30, top: 5, bottom: 5),
+        margin: const EdgeInsets.only(left: 30, top: 5, bottom: 5),
         padding: const EdgeInsets.all(15),
         decoration: BoxDecoration(
           color: DefaultColors.senderMessage,

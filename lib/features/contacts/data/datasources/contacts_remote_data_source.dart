@@ -1,12 +1,11 @@
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:chugli/features/contacts/data/models/contacts_model.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 
 class ContactsRemoteDataSource {
-  final String baseUrl = 'http://192.168.102.140:3000';
+  final String baseUrl = 'http://192.168.226.140:3000';
   final _storage = FlutterSecureStorage();
 
   Future<void> addContact({required String email}) async {

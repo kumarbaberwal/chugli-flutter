@@ -1,11 +1,11 @@
 import 'dart:developer';
 
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:socket_io_client/socket_io_client.dart' as IO;
+import 'package:socket_io_client/socket_io_client.dart' as io;
 
 class SocketService {
   static final SocketService _instance = SocketService._internal();
-  late IO.Socket _socket;
+  late io.Socket _socket;
 
   final _storage = FlutterSecureStorage();
   factory SocketService() => _instance;
@@ -14,11 +14,13 @@ class SocketService {
     initSocket();
   }
 
+  io.Socket get socket => _socket;
+
   Future<void> initSocket() async {
     final token = await _storage.read(key: 'token');
-    _socket = IO.io(
-      'http://192.168.226.140:3000',
-      IO.OptionBuilder()
+    _socket = io.io(
+      'http://192.168.102.140:3000',
+      io.OptionBuilder()
           .setTransports(['websocket'])
           .disableAutoConnect()
           .setExtraHeaders({'Authorization': 'Bearer $token'})
@@ -35,7 +37,4 @@ class SocketService {
       log('Socket disconnected: ${_socket.id}');
     });
   }
-
-
-  IO.Socket get socket => _socket;
 }

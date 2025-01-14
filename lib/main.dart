@@ -11,8 +11,14 @@ import 'package:chugli/features/chat/data/datasources/messages_remote_data_sourc
 import 'package:chugli/features/chat/data/repositories/message_repository_impl.dart';
 import 'package:chugli/features/chat/domain/usecases/fetch_messages_use_case.dart';
 import 'package:chugli/features/chat/presentation/bloc/chat_bloc.dart';
+import 'package:chugli/features/contacts/data/datasources/contacts_remote_data_source.dart';
+import 'package:chugli/features/contacts/data/repositories/contacts_repository_impl.dart';
+import 'package:chugli/features/contacts/domain/usecases/add_contact_use_case.dart';
+import 'package:chugli/features/contacts/domain/usecases/fetch_contacts_use_case.dart';
+import 'package:chugli/features/contacts/presentation/bloc/contacts_bloc.dart';
 import 'package:chugli/features/conversation/data/datasources/conversation_remote_data_source.dart';
 import 'package:chugli/features/conversation/data/repositories/conversation_repository_impl.dart';
+import 'package:chugli/features/conversation/domain/usecases/check_or_create_conversations_use_case.dart';
 import 'package:chugli/features/conversation/domain/usecases/fetch_conversations_use_case.dart';
 import 'package:chugli/features/conversation/presentation/bloc/conversations_bloc.dart';
 import 'package:chugli/features/conversation/presentation/pages/conversation_page.dart';
@@ -32,12 +38,15 @@ void main() async {
   final messageRepository = MessageRepositoryImpl(
     messagesRemoteDataSource: MessagesRemoteDataSource(),
   );
-  WidgetsFlutterBinding.ensureInitialized();
+  final contactsRepository = ContactsRepositoryImpl(
+    contactsRemoteDataSource: ContactsRemoteDataSource(),
+  );
   runApp(
     MyApp(
       authRepositoryImpl: authRepository,
       conversationRepositoryImpl: conversationRepository,
       messageRepositoryImpl: messageRepository,
+      contactsRepositoryImpl: contactsRepository,
     ),
   );
 }
@@ -46,12 +55,14 @@ class MyApp extends StatelessWidget {
   final AuthRepositoryImpl authRepositoryImpl;
   final ConversationRepositoryImpl conversationRepositoryImpl;
   final MessageRepositoryImpl messageRepositoryImpl;
+  final ContactsRepositoryImpl contactsRepositoryImpl;
 
   const MyApp({
     super.key,
     required this.authRepositoryImpl,
     required this.conversationRepositoryImpl,
     required this.messageRepositoryImpl,
+    required this.contactsRepositoryImpl,
   });
 
   @override
@@ -75,7 +86,17 @@ class MyApp extends StatelessWidget {
             fetchMessagesUseCase:
                 FetchMessagesUseCase(messageRepository: messageRepositoryImpl),
           ),
-        )
+        ),
+        BlocProvider(
+          create: (context) => ContactsBloc(
+              fetchContactsUseCase: FetchContactsUseCase(
+                  contactsRepository: contactsRepositoryImpl),
+              addContactUseCase:
+                  AddContactUseCase(contactsRepository: contactsRepositoryImpl),
+              checkOrCreateConversationsUseCase:
+                  CheckOrCreateConversationsUseCase(
+                      conversationsRepository: conversationRepositoryImpl)),
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

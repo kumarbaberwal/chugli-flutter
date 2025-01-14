@@ -6,7 +6,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 
 class MessagesRemoteDataSource {
-  final String baseUrl = 'http://192.168.226.140:3000';
+  final String baseUrl = 'http://192.168.102.140:3000';
   final _storage = FlutterSecureStorage();
 
   Future<List<MessageEntity>> fetchMessages(String conversationId) async {

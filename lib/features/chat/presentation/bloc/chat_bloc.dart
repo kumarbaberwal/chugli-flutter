@@ -29,21 +29,12 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
       _messages.clear();
       _messages.addAll(message);
       emit(ChatLoadedState(messages: List.from(_messages)));
-
-      // _socketService.socket.emit('joinConversation', event.conversationId);
-      // _socketService.socket.on('newMessage', (data) {
-      //   log('Step 1 - receive : $data');
-      //   add(ReceiveMessageEvent(message: data));
-      // });
-
-      // Add listener only if it doesn't already exist
-      if (!_socketService.socket.hasListeners('newMessage')) {
-        _socketService.socket.emit('joinConversation', event.conversationId);
-        _socketService.socket.on('newMessage', (data) {
-          log('Step 1 - receive : $data');
-          add(ReceiveMessageEvent(message: data));
-        });
-      }
+      _socketService.socket.off('newMessage');
+      _socketService.socket.emit('joinConversation', event.conversationId);
+      _socketService.socket.on('newMessage', (data) {
+        log('Step 1 - receive : $data');
+        add(ReceiveMessageEvent(message: data));
+      });
     } catch (e) {
       emit(ChatErrorState(message: e.toString()));
     }

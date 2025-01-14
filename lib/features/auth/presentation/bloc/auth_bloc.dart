@@ -22,7 +22,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       await _storage.write(key: 'userId', value: user.id);
       emit(AuthSuccess(message: "Registration successful"));
     } catch (e) {
-      emit(AuthFailure(error: "Registration failed"));
+      emit(AuthFailure(error: "Login failed"));
     }
   }
 

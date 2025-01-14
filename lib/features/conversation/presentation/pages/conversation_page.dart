@@ -7,6 +7,8 @@ import 'package:chugli/features/conversation/presentation/bloc/conversations_sta
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../contacts/presentation/pages/contacts_page.dart';
+
 class ConversationPage extends StatefulWidget {
   const ConversationPage({super.key});
 
@@ -50,17 +52,44 @@ class _ConversationPageState extends State<ConversationPage> {
           Container(
             padding: const EdgeInsets.all(5),
             height: 100,
-            child: ListView(
-              scrollDirection: Axis.horizontal,
-              children: [
-                _buildRecentContact(context, "Kumar"),
-                _buildRecentContact(context, "Kumar"),
-                _buildRecentContact(context, "Kumar"),
-                _buildRecentContact(context, "Kumar"),
-                _buildRecentContact(context, "Kumar"),
-                _buildRecentContact(context, "Kumar"),
-                _buildRecentContact(context, "Kumar"),
-              ],
+            child: BlocBuilder<ConversationsBloc, ConversationsState>(
+              builder: (context, state) {
+                if (state is ConversationsLoading) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                } else if (state is ConversationsLoaded) {
+                  return ListView.builder(
+                    itemBuilder: (context, index) {
+                      final conversations = state.conversations[index];
+                      return GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ChatPage(
+                                conversationId: conversations.id,
+                                mate: conversations.participantName,
+                              ),
+                            ),
+                          );
+                        },
+                        child: _buildRecentContact(context,
+                            conversations.participantName),
+                      );
+                    },
+                    itemCount: state.conversations.length,
+                    scrollDirection: Axis.horizontal,
+                  );
+                }else if (state is ConversationsError) {
+                    return Center(
+                      child: Text(state.error),
+                    );
+                  }
+                  return const Center(
+                    child: Text('No Recent Conversations Found'),
+                  );
+              },
             ),
           ),
           const SizedBox(
@@ -120,6 +149,18 @@ class _ConversationPageState extends State<ConversationPage> {
             ),
           )
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ContactsPage(),
+            ),
+          );
+        },
+        backgroundColor: DefaultColors.buttonColor,
+        child: Icon(Icons.contacts),
       ),
     );
   }

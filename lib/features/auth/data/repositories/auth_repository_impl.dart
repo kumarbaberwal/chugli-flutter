@@ -1,6 +1,6 @@
-import 'package:chugli/features/auth/data/datasources/auth_remote_data_source.dart';
-import 'package:chugli/features/auth/domain/entities/user_entity.dart';
-import 'package:chugli/features/auth/domain/repositories/auth_repository.dart';
+import 'package:vibematch/features/auth/data/datasources/auth_remote_data_source.dart';
+import 'package:vibematch/features/auth/domain/entities/user_entity.dart';
+import 'package:vibematch/features/auth/domain/repositories/auth_repository.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
   final AuthRemoteDataSource authRemoteDataSource;

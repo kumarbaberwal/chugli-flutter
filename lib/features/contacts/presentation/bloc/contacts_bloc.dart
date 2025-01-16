@@ -1,8 +1,8 @@
-import 'package:chugli/features/contacts/domain/usecases/add_contact_use_case.dart';
-import 'package:chugli/features/contacts/domain/usecases/fetch_contacts_use_case.dart';
-import 'package:chugli/features/contacts/presentation/bloc/contacts_event.dart';
-import 'package:chugli/features/contacts/presentation/bloc/contacts_state.dart';
-import 'package:chugli/features/conversation/domain/usecases/check_or_create_conversations_use_case.dart';
+import 'package:vibematch/features/contacts/domain/usecases/add_contact_use_case.dart';
+import 'package:vibematch/features/contacts/domain/usecases/fetch_contacts_use_case.dart';
+import 'package:vibematch/features/contacts/presentation/bloc/contacts_event.dart';
+import 'package:vibematch/features/contacts/presentation/bloc/contacts_state.dart';
+import 'package:vibematch/features/conversation/domain/usecases/check_or_create_conversations_use_case.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ContactsBloc extends Bloc<ContactsEvent, ContactsState> {

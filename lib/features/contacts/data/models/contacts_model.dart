@@ -1,4 +1,4 @@
-import 'package:chugli/features/contacts/domain/entities/contact_entity.dart';
+import 'package:vibematch/features/contacts/domain/entities/contact_entity.dart';
 
 class ContactsModel extends ContactEntity {
   ContactsModel({

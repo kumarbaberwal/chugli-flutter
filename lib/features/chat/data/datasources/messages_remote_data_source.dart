@@ -1,9 +1,9 @@
 import 'dart:convert';
 
-import 'package:chugli/features/chat/data/models/message_model.dart';
-import 'package:chugli/features/chat/domain/entities/message_entity.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
+import 'package:vibematch/features/chat/data/models/message_model.dart';
+import 'package:vibematch/features/chat/domain/entities/message_entity.dart';
 
 class MessagesRemoteDataSource {
   final String baseUrl = 'http://192.168.102.140:3000';

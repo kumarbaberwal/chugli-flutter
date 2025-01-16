@@ -1,11 +1,11 @@
-import 'package:chugli/features/auth/presentation/bloc/auth_bloc.dart';
-import 'package:chugli/features/auth/presentation/bloc/auth_event.dart';
-import 'package:chugli/features/auth/presentation/bloc/auth_state.dart';
-import 'package:chugli/features/auth/presentation/widgets/auth_button.dart';
-import 'package:chugli/features/auth/presentation/widgets/auth_input_fields.dart';
-import 'package:chugli/features/auth/presentation/widgets/login_prompt.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:vibematch/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:vibematch/features/auth/presentation/bloc/auth_event.dart';
+import 'package:vibematch/features/auth/presentation/bloc/auth_state.dart';
+import 'package:vibematch/features/auth/presentation/widgets/auth_button.dart';
+import 'package:vibematch/features/auth/presentation/widgets/auth_input_fields.dart';
+import 'package:vibematch/features/auth/presentation/widgets/login_prompt.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});

@@ -1,5 +1,5 @@
-import 'package:chugli/features/chat/domain/entities/message_entity.dart';
-import 'package:chugli/features/chat/domain/repositories/message_repository.dart';
+import 'package:vibematch/features/chat/domain/entities/message_entity.dart';
+import 'package:vibematch/features/chat/domain/repositories/message_repository.dart';
 
 class FetchMessagesUseCase {
   final MessageRepository messageRepository;

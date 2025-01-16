@@ -1,7 +1,7 @@
-import 'package:chugli/features/auth/domain/usecases/login_use_case.dart';
-import 'package:chugli/features/auth/domain/usecases/register_use_case.dart';
-import 'package:chugli/features/auth/presentation/bloc/auth_event.dart';
-import 'package:chugli/features/auth/presentation/bloc/auth_state.dart';
+import 'package:vibematch/features/auth/domain/usecases/login_use_case.dart';
+import 'package:vibematch/features/auth/domain/usecases/register_use_case.dart';
+import 'package:vibematch/features/auth/presentation/bloc/auth_event.dart';
+import 'package:vibematch/features/auth/presentation/bloc/auth_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
@@ -9,7 +9,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final FlutterSecureStorage _storage = const FlutterSecureStorage();
   final RegisterUseCase registerUseCase;
   final LoginUseCase loginUseCase;
-  AuthBloc({required this.registerUseCase, required this.loginUseCase}) : super(AuthInitial()) {
+  AuthBloc({required this.registerUseCase, required this.loginUseCase})
+      : super(AuthInitial()) {
     on<LoginEvent>(_onLogin);
     on<RegisterEvent>(_onRegister);
   }

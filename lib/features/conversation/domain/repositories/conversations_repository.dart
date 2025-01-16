@@ -1,6 +1,6 @@
-import 'package:chugli/features/conversation/domain/entities/conversation_entity.dart';
+import 'package:vibematch/features/conversation/domain/entities/conversation_entity.dart';
 
 abstract class ConversationsRepository {
-  Future<List<ConversationEntity>> fetchConversations();
   Future<String> checkOrCreateConversations({required String contactId});
+  Future<List<ConversationEntity>> fetchConversations();
 }

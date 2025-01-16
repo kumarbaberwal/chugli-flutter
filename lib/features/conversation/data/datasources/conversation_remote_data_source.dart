@@ -1,9 +1,9 @@
 import 'dart:convert';
 import 'dart:developer';
 
-import 'package:chugli/features/conversation/data/models/conversation_model.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
+import 'package:vibematch/features/conversation/data/models/conversation_model.dart';
 
 class ConversationRemoteDataSource {
   final String baseUrl = "http://192.168.102.140:3000";

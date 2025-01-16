@@ -2,9 +2,9 @@
 import 'dart:developer';
 
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:chugli/core/theme.dart';
-import 'package:chugli/features/chat/presentation/bloc/chat_event.dart';
-import 'package:chugli/features/chat/presentation/bloc/chat_state.dart';
+import 'package:vibematch/core/theme.dart';
+import 'package:vibematch/features/chat/presentation/bloc/chat_event.dart';
+import 'package:vibematch/features/chat/presentation/bloc/chat_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';

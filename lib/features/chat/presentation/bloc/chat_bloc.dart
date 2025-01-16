@@ -2,11 +2,11 @@
 import 'dart:convert';
 import 'dart:developer';
 
-import 'package:chugli/core/socket_service.dart';
-import 'package:chugli/features/chat/domain/entities/message_entity.dart';
-import 'package:chugli/features/chat/domain/usecases/fetch_messages_use_case.dart';
-import 'package:chugli/features/chat/presentation/bloc/chat_event.dart';
-import 'package:chugli/features/chat/presentation/bloc/chat_state.dart';
+import 'package:vibematch/core/socket_service.dart';
+import 'package:vibematch/features/chat/domain/entities/message_entity.dart';
+import 'package:vibematch/features/chat/domain/usecases/fetch_messages_use_case.dart';
+import 'package:vibematch/features/chat/presentation/bloc/chat_event.dart';
+import 'package:vibematch/features/chat/presentation/bloc/chat_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 

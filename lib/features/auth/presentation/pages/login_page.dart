@@ -1,6 +1,6 @@
-import 'package:chugli/features/auth/presentation/bloc/auth_bloc.dart';
-import 'package:chugli/features/auth/presentation/bloc/auth_event.dart';
-import 'package:chugli/features/auth/presentation/bloc/auth_state.dart';
+import 'package:vibematch/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:vibematch/features/auth/presentation/bloc/auth_event.dart';
+import 'package:vibematch/features/auth/presentation/bloc/auth_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

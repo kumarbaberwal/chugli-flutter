@@ -1,11 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:chugli/core/theme.dart';
-import 'package:chugli/features/chat/presentation/pages/chat_page.dart';
-import 'package:chugli/features/conversation/presentation/bloc/conversations_bloc.dart';
-import 'package:chugli/features/conversation/presentation/bloc/conversations_event.dart';
-import 'package:chugli/features/conversation/presentation/bloc/conversations_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:vibematch/core/theme.dart';
+import 'package:vibematch/features/chat/presentation/pages/chat_page.dart';
+import 'package:vibematch/features/conversation/presentation/bloc/conversations_bloc.dart';
+import 'package:vibematch/features/conversation/presentation/bloc/conversations_event.dart';
+import 'package:vibematch/features/conversation/presentation/bloc/conversations_state.dart';
 
 import '../../../contacts/presentation/pages/contacts_page.dart';
 
@@ -74,21 +74,21 @@ class _ConversationPageState extends State<ConversationPage> {
                             ),
                           );
                         },
-                        child: _buildRecentContact(context,
-                            conversations.participantName),
+                        child: _buildRecentContact(
+                            context, conversations.participantName),
                       );
                     },
                     itemCount: state.conversations.length,
                     scrollDirection: Axis.horizontal,
                   );
-                }else if (state is ConversationsError) {
-                    return Center(
-                      child: Text(state.error),
-                    );
-                  }
-                  return const Center(
-                    child: Text('No Recent Conversations Found'),
+                } else if (state is ConversationsError) {
+                  return Center(
+                    child: Text(state.error),
                   );
+                }
+                return const Center(
+                  child: Text('No Recent Conversations Found'),
+                );
               },
             ),
           ),

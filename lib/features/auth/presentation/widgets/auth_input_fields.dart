@@ -1,5 +1,5 @@
-import 'package:chugli/core/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:vibematch/core/theme.dart';
 
 class AuthInputFields extends StatelessWidget {
   final String hintText;

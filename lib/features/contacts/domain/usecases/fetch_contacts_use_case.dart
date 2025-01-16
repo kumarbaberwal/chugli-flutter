@@ -1,5 +1,5 @@
-import 'package:chugli/features/contacts/domain/entities/contact_entity.dart';
-import 'package:chugli/features/contacts/domain/repositories/contacts_repository.dart';
+import 'package:vibematch/features/contacts/domain/entities/contact_entity.dart';
+import 'package:vibematch/features/contacts/domain/repositories/contacts_repository.dart';
 
 class FetchContactsUseCase {
   final ContactsRepository contactsRepository;

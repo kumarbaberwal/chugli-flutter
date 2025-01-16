@@ -1,8 +1,8 @@
 import 'dart:convert';
 
-import 'package:chugli/features/contacts/data/models/contacts_model.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
+import 'package:vibematch/features/contacts/data/models/contacts_model.dart';
 
 class ContactsRemoteDataSource {
   final String baseUrl = 'http://192.168.226.140:3000';

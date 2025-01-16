@@ -1,12 +1,12 @@
 import 'dart:developer';
 
-import 'package:chugli/core/theme.dart';
-import 'package:chugli/features/chat/presentation/pages/chat_page.dart';
-import 'package:chugli/features/contacts/presentation/bloc/contacts_bloc.dart';
-import 'package:chugli/features/contacts/presentation/bloc/contacts_event.dart';
-import 'package:chugli/features/contacts/presentation/bloc/contacts_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:vibematch/core/theme.dart';
+import 'package:vibematch/features/chat/presentation/pages/chat_page.dart';
+import 'package:vibematch/features/contacts/presentation/bloc/contacts_bloc.dart';
+import 'package:vibematch/features/contacts/presentation/bloc/contacts_event.dart';
+import 'package:vibematch/features/contacts/presentation/bloc/contacts_state.dart';
 
 class ContactsPage extends StatefulWidget {
   const ContactsPage({super.key});

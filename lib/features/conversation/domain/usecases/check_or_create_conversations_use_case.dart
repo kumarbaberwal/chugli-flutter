@@ -1,4 +1,4 @@
-import 'package:chugli/features/conversation/domain/repositories/conversations_repository.dart';
+import 'package:vibematch/features/conversation/domain/repositories/conversations_repository.dart';
 
 class CheckOrCreateConversationsUseCase {
   final ConversationsRepository conversationsRepository;

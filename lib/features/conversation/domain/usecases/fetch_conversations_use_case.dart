@@ -1,5 +1,5 @@
-import 'package:chugli/features/conversation/domain/entities/conversation_entity.dart';
-import 'package:chugli/features/conversation/domain/repositories/conversations_repository.dart';
+import 'package:vibematch/features/conversation/domain/entities/conversation_entity.dart';
+import 'package:vibematch/features/conversation/domain/repositories/conversations_repository.dart';
 
 class FetchConversationsUseCase {
   final ConversationsRepository repository;

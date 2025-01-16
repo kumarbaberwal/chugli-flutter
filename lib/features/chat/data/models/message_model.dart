@@ -1,4 +1,4 @@
-import 'package:chugli/features/chat/domain/entities/message_entity.dart';
+import 'package:vibematch/features/chat/domain/entities/message_entity.dart';
 
 class MessageModel extends MessageEntity {
   MessageModel({

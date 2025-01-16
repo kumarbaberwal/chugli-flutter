@@ -1,4 +1,4 @@
-import 'package:chugli/features/conversation/domain/entities/conversation_entity.dart';
+import 'package:vibematch/features/conversation/domain/entities/conversation_entity.dart';
 
 class ConversationsError extends ConversationsState {
   final String error;

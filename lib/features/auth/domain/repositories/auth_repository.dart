@@ -1,4 +1,4 @@
-import 'package:chugli/features/auth/domain/entities/user_entity.dart';
+import 'package:vibematch/features/auth/domain/entities/user_entity.dart';
 
 abstract class AuthRepository {
   Future<UserEntity> login(String email, String password);

@@ -1,4 +1,4 @@
-import 'package:chugli/features/contacts/domain/repositories/contacts_repository.dart';
+import 'package:vibematch/features/contacts/domain/repositories/contacts_repository.dart';
 
 class AddContactUseCase {
   final ContactsRepository contactsRepository;

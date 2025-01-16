@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'dart:developer';
 
-import 'package:chugli/features/auth/data/models/user_model.dart';
 import 'package:http/http.dart' as http;
+import 'package:vibematch/features/auth/data/models/user_model.dart';
 
 class AuthRemoteDataSource {
   final String baseUrl = "http://192.168.102.140:3000/auth";

@@ -1,6 +1,6 @@
-import 'package:chugli/features/contacts/data/datasources/contacts_remote_data_source.dart';
-import 'package:chugli/features/contacts/domain/entities/contact_entity.dart';
-import 'package:chugli/features/contacts/domain/repositories/contacts_repository.dart';
+import 'package:vibematch/features/contacts/data/datasources/contacts_remote_data_source.dart';
+import 'package:vibematch/features/contacts/domain/entities/contact_entity.dart';
+import 'package:vibematch/features/contacts/domain/repositories/contacts_repository.dart';
 
 class ContactsRepositoryImpl implements ContactsRepository {
   final ContactsRemoteDataSource contactsRemoteDataSource;

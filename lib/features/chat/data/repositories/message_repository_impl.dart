@@ -1,6 +1,6 @@
-import 'package:chugli/features/chat/data/datasources/messages_remote_data_source.dart';
-import 'package:chugli/features/chat/domain/entities/message_entity.dart';
-import 'package:chugli/features/chat/domain/repositories/message_repository.dart';
+import 'package:vibematch/features/chat/data/datasources/messages_remote_data_source.dart';
+import 'package:vibematch/features/chat/domain/entities/message_entity.dart';
+import 'package:vibematch/features/chat/domain/repositories/message_repository.dart';
 
 class MessageRepositoryImpl implements MessageRepository {
   final MessagesRemoteDataSource messagesRemoteDataSource;

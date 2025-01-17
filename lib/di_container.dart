@@ -24,7 +24,7 @@ import 'package:vibematch/features/conversation/domain/usecases/fetch_conversati
 final GetIt sl = GetIt.instance;
 
 void setupDependencies() {
-  const String baseUrl = "http://192.168.102.140:3000/";
+  const String baseUrl = "http://192.168.102.140:3000";
 
   // data sources
   sl.registerLazySingleton<AuthRemoteDataSource>(

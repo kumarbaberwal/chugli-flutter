@@ -21,7 +21,7 @@ import 'package:vibematch/features/conversation/domain/repositories/conversation
 import 'package:vibematch/features/conversation/domain/usecases/check_or_create_conversations_use_case.dart';
 import 'package:vibematch/features/conversation/domain/usecases/fetch_conversations_use_case.dart';
 
-final GetIt sl = GetIt.instance();
+final GetIt sl = GetIt.instance;
 
 void setupDependencies() {
   const String baseUrl = "http://192.168.102.140:3000/";

@@ -7,10 +7,12 @@ class AddContactEvent extends ContactsEvent {
 class CheckOrCreateConversationsEvent extends ContactsEvent {
   final String contactId;
   final String contactName;
+  final String contactImage;
 
   CheckOrCreateConversationsEvent({
     required this.contactId,
     required this.contactName,
+    required this.contactImage,
   });
 }
 

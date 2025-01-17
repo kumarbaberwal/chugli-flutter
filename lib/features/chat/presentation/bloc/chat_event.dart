@@ -1,5 +1,10 @@
 abstract class ChatEvent {}
 
+class LoadDailyQuestionEvent extends ChatEvent {
+  final String conversationId;
+  LoadDailyQuestionEvent({required this.conversationId});
+}
+
 class LoadMessagesEvent extends ChatEvent {
   final String conversationId;
   LoadMessagesEvent({required this.conversationId});

@@ -40,6 +40,7 @@ class DefaultColors {
   static const Color sentMessageInput = Color(0xff3d4354);
   static const Color messageListPage = Color(0xff292f3f);
   static const Color buttonColor = Color(0xff7a8194);
+  static const Color dailyQuestionColor = Colors.blueGrey;
 }
 
 class FontSizes {

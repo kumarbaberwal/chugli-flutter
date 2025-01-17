@@ -22,6 +22,11 @@ abstract class ContactsState {}
 class ConversationsReady extends ContactsState {
   final String conversationId;
   final String contactName;
+  final String contactImage;
 
-  ConversationsReady({required this.conversationId, required this.contactName});
+  ConversationsReady({
+    required this.conversationId,
+    required this.contactName,
+    required this.contactImage,
+  });
 }

@@ -29,6 +29,7 @@ class _ConversationPageState extends State<ConversationPage> {
         elevation: 0,
         centerTitle: false,
         toolbarHeight: 70,
+        foregroundColor: Colors.white,
         actions: [
           IconButton(
             onPressed: () {},
@@ -70,12 +71,16 @@ class _ConversationPageState extends State<ConversationPage> {
                               builder: (context) => ChatPage(
                                 conversationId: conversations.id,
                                 mate: conversations.participantName,
+                                image: conversations.participantImage,
                               ),
                             ),
                           );
                         },
                         child: _buildRecentContact(
-                            context, conversations.participantName),
+                          context,
+                          conversations.participantName,
+                          conversations.participantImage,
+                        ),
                       );
                     },
                     itemCount: state.conversations.length,
@@ -121,14 +126,17 @@ class _ConversationPageState extends State<ConversationPage> {
                               context,
                               MaterialPageRoute(
                                 builder: (context) => ChatPage(
-                                    conversationId: conversations.id,
-                                    mate: conversations.participantName),
+                                  conversationId: conversations.id,
+                                  mate: conversations.participantName,
+                                  image: conversations.participantImage,
+                                ),
                               ),
                             );
                           },
                           child: _buildMessageTile(
                             conversations.participantName,
                             conversations.lastMessage,
+                            conversations.participantImage,
                             conversations.lastMessageTime
                                 .toString()
                                 .split('.')[0],
@@ -171,12 +179,13 @@ class _ConversationPageState extends State<ConversationPage> {
     BlocProvider.of<ConversationsBloc>(context).add(FetchConvesationsEvent());
   }
 
-  Widget _buildMessageTile(String name, String message, String time) {
+  Widget _buildMessageTile(
+      String name, String message, String image, String time) {
     return ListTile(
       contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-      leading: const CircleAvatar(
+      leading: CircleAvatar(
         backgroundImage: CachedNetworkImageProvider(
-          "https://media.istockphoto.com/id/1147544807/vector/thumbnail-image-vector-graphic.jpg?s=612x612&w=0&k=20&c=rnCKVbdxqkjlcs3xH87-9gocETqpspHFXu5dIGB4wuM=",
+          image,
           scale: 1.0,
         ),
         radius: 30,
@@ -188,6 +197,8 @@ class _ConversationPageState extends State<ConversationPage> {
       ),
       subtitle: Text(
         message,
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
         style: const TextStyle(color: Colors.grey),
       ),
       trailing: Text(
@@ -197,14 +208,14 @@ class _ConversationPageState extends State<ConversationPage> {
     );
   }
 
-  Widget _buildRecentContact(BuildContext context, String name) {
+  Widget _buildRecentContact(BuildContext context, String name, String image) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10),
       child: Column(
         children: [
-          const CircleAvatar(
+          CircleAvatar(
             backgroundImage: CachedNetworkImageProvider(
-              "https://media.istockphoto.com/id/1147544807/vector/thumbnail-image-vector-graphic.jpg?s=612x612&w=0&k=20&c=rnCKVbdxqkjlcs3xH87-9gocETqpspHFXu5dIGB4wuM=",
+              image,
               scale: 1.0,
             ),
             radius: 30,

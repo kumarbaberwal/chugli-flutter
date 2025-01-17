@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vibematch/core/theme.dart';
@@ -28,6 +29,7 @@ class _ContactsPageState extends State<ContactsPage> {
         elevation: 0,
         centerTitle: false,
         toolbarHeight: 70,
+        foregroundColor: Colors.white,
       ),
       body: BlocListener<ContactsBloc, ContactsState>(
         listener: (context, state) async {
@@ -39,6 +41,7 @@ class _ContactsPageState extends State<ContactsPage> {
                 builder: (context) => ChatPage(
                   conversationId: state.conversationId,
                   mate: state.contactName,
+                  image: state.contactImage,
                 ),
               ),
             );
@@ -58,6 +61,13 @@ class _ContactsPageState extends State<ContactsPage> {
                 itemBuilder: (context, index) {
                   final contact = state.contacts[index];
                   return ListTile(
+                    leading: CircleAvatar(
+                      backgroundImage: CachedNetworkImageProvider(
+                        contact.contactImage,
+                        scale: 1.0,
+                      ),
+                      radius: 30,
+                    ),
                     title: Text(
                       contact.username,
                       style: Theme.of(context).textTheme.bodyLarge,
@@ -71,6 +81,7 @@ class _ContactsPageState extends State<ContactsPage> {
                         CheckOrCreateConversationsEvent(
                           contactId: contact.id,
                           contactName: contact.username,
+                          contactImage: contact.contactImage,
                         ),
                       );
                     },

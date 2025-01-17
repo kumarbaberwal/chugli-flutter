@@ -2,22 +2,25 @@
 import 'dart:developer';
 
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:vibematch/core/theme.dart';
-import 'package:vibematch/features/chat/presentation/bloc/chat_event.dart';
-import 'package:vibematch/features/chat/presentation/bloc/chat_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:vibematch/core/theme.dart';
+import 'package:vibematch/features/chat/presentation/bloc/chat_event.dart';
+import 'package:vibematch/features/chat/presentation/bloc/chat_state.dart';
+import 'package:vibematch/features/chat/presentation/pages/profile_page.dart';
 
 import '../bloc/chat_bloc.dart';
 
 class ChatPage extends StatefulWidget {
   final String conversationId;
   final String mate;
+  final String image;
   const ChatPage({
     super.key,
     required this.conversationId,
     required this.mate,
+    required this.image,
   });
 
   @override
@@ -28,6 +31,7 @@ class _ChatPageState extends State<ChatPage> {
   final TextEditingController _messageController = TextEditingController();
   final _storage = FlutterSecureStorage();
   String userId = '';
+  String botId = '00000000-0000-0000-0000-000000000000';
 
   @override
   Widget build(BuildContext context) {
@@ -35,6 +39,7 @@ class _ChatPageState extends State<ChatPage> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
+        foregroundColor: Colors.white,
         actions: [
           IconButton(
             onPressed: () {},
@@ -46,10 +51,23 @@ class _ChatPageState extends State<ChatPage> {
         ],
         title: Row(
           children: [
-            const CircleAvatar(
-              backgroundImage: CachedNetworkImageProvider(
-                "https://media.istockphoto.com/id/1147544807/vector/thumbnail-image-vector-graphic.jpg?s=612x612&w=0&k=20&c=rnCKVbdxqkjlcs3xH87-9gocETqpspHFXu5dIGB4wuM=",
-                scale: 1.0,
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ProfilePage(
+                      image: widget.image,
+                      name: widget.mate,
+                    ),
+                  ),
+                );
+              },
+              child: CircleAvatar(
+                backgroundImage: CachedNetworkImageProvider(
+                  widget.image,
+                  scale: 1.0,
+                ),
               ),
             ),
             const SizedBox(
@@ -76,8 +94,12 @@ class _ChatPageState extends State<ChatPage> {
                     itemBuilder: (context, index) {
                       final message = state.messages[index];
                       final isSentMessage = message.senderId == userId;
+                      final isDailyQuestion = message.senderId == botId;
                       if (isSentMessage) {
                         return _buildSentMessage(context, message.content);
+                      } else if (isDailyQuestion) {
+                        return _buildDailyQuestionMessage(
+                            context, message.content);
                       } else {
                         return _buildReceivedMessage(context, message.content);
                       }
@@ -121,6 +143,27 @@ class _ChatPageState extends State<ChatPage> {
     BlocProvider.of<ChatBloc>(context)
         .add(LoadMessagesEvent(conversationId: widget.conversationId));
     fetchUserId();
+  }
+
+  Widget _buildDailyQuestionMessage(BuildContext context, String message) {
+    return Align(
+      alignment: Alignment.center,
+      child: Container(
+        margin: const EdgeInsets.symmetric(vertical: 10),
+        padding: const EdgeInsets.all(15),
+        decoration: BoxDecoration(
+          color: DefaultColors.dailyQuestionColor,
+          borderRadius: BorderRadius.circular(15),
+        ),
+        child: Text(
+          "🧠 Daily Question: $message",
+          style: Theme.of(context)
+              .textTheme
+              .bodyMedium
+              ?.copyWith(color: Colors.white70),
+        ),
+      ),
+    );
   }
 
   Widget _buildMessageInput() {

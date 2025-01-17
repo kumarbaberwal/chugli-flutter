@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vibematch/core/socket_service.dart';
 import 'package:vibematch/core/theme.dart';
 import 'package:vibematch/features/auth/data/datasources/auth_remote_data_source.dart';
@@ -9,6 +11,7 @@ import 'package:vibematch/features/auth/presentation/pages/login_page.dart';
 import 'package:vibematch/features/auth/presentation/pages/register_page.dart';
 import 'package:vibematch/features/chat/data/datasources/messages_remote_data_source.dart';
 import 'package:vibematch/features/chat/data/repositories/message_repository_impl.dart';
+import 'package:vibematch/features/chat/domain/usecases/fetch_daily_question_use_case.dart';
 import 'package:vibematch/features/chat/domain/usecases/fetch_messages_use_case.dart';
 import 'package:vibematch/features/chat/presentation/bloc/chat_bloc.dart';
 import 'package:vibematch/features/contacts/data/datasources/contacts_remote_data_source.dart';
@@ -22,8 +25,6 @@ import 'package:vibematch/features/conversation/domain/usecases/check_or_create_
 import 'package:vibematch/features/conversation/domain/usecases/fetch_conversations_use_case.dart';
 import 'package:vibematch/features/conversation/presentation/bloc/conversations_bloc.dart';
 import 'package:vibematch/features/conversation/presentation/pages/conversation_page.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -85,6 +86,8 @@ class MyApp extends StatelessWidget {
           create: (context) => ChatBloc(
             fetchMessagesUseCase:
                 FetchMessagesUseCase(messageRepository: messageRepositoryImpl),
+            fetchDailyQuestionUseCase: FetchDailyQuestionUseCase(
+                messageRepository: messageRepositoryImpl),
           ),
         ),
         BlocProvider(

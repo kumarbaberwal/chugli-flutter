@@ -1,9 +1,9 @@
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vibematch/features/contacts/domain/usecases/add_contact_use_case.dart';
 import 'package:vibematch/features/contacts/domain/usecases/fetch_contacts_use_case.dart';
 import 'package:vibematch/features/contacts/presentation/bloc/contacts_event.dart';
 import 'package:vibematch/features/contacts/presentation/bloc/contacts_state.dart';
 import 'package:vibematch/features/conversation/domain/usecases/check_or_create_conversations_use_case.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ContactsBloc extends Bloc<ContactsEvent, ContactsState> {
   final FetchContactsUseCase fetchContactsUseCase;
@@ -39,7 +39,10 @@ class ContactsBloc extends Bloc<ContactsEvent, ContactsState> {
       final conversationId =
           await checkOrCreateConversationsUseCase(contactId: event.contactId);
       emit(ConversationsReady(
-          conversationId: conversationId, contactName: event.contactName));
+        conversationId: conversationId,
+        contactName: event.contactName,
+        contactImage: event.contactImage,
+      ));
     } catch (e) {
       emit(ContactsError(error: 'Failed to start conversations'));
     }

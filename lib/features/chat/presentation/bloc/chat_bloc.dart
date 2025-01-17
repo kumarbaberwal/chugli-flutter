@@ -2,23 +2,42 @@
 import 'dart:convert';
 import 'dart:developer';
 
-import 'package:vibematch/core/socket_service.dart';
-import 'package:vibematch/features/chat/domain/entities/message_entity.dart';
-import 'package:vibematch/features/chat/domain/usecases/fetch_messages_use_case.dart';
-import 'package:vibematch/features/chat/presentation/bloc/chat_event.dart';
-import 'package:vibematch/features/chat/presentation/bloc/chat_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
+import 'package:vibematch/core/socket_service.dart';
+import 'package:vibematch/features/chat/domain/entities/message_entity.dart';
+import 'package:vibematch/features/chat/domain/usecases/fetch_daily_question_use_case.dart';
+import 'package:vibematch/features/chat/domain/usecases/fetch_messages_use_case.dart';
+import 'package:vibematch/features/chat/presentation/bloc/chat_event.dart';
+import 'package:vibematch/features/chat/presentation/bloc/chat_state.dart';
+
 class ChatBloc extends Bloc<ChatEvent, ChatState> {
   final FetchMessagesUseCase fetchMessagesUseCase;
+  final FetchDailyQuestionUseCase fetchDailyQuestionUseCase;
   final SocketService _socketService = SocketService();
   final List<MessageEntity> _messages = [];
   final _storage = FlutterSecureStorage();
-  ChatBloc({required this.fetchMessagesUseCase}) : super(ChatLoadingState()) {
+  ChatBloc({
+    required this.fetchMessagesUseCase,
+    required this.fetchDailyQuestionUseCase,
+  }) : super(ChatLoadingState()) {
     on<LoadMessagesEvent>(_onLoadMessages);
     on<SendMessageEvent>(_onSendMessage);
     on<ReceiveMessageEvent>(_onReceiveMessage);
+    on<LoadDailyQuestionEvent>(_onLoadDailyQuestion);
+  }
+
+  Future<void> _onLoadDailyQuestion(
+      LoadDailyQuestionEvent event, Emitter<ChatState> emit) async {
+    try {
+      emit(ChatLoadingState());
+      final dailyQuestion =
+          await fetchDailyQuestionUseCase(conversationId: event.conversationId);
+      emit(DailyQuestionLoadState(questionEntity: dailyQuestion));
+    } catch (e) {
+      emit(ChatErrorState(message: e.toString()));
+    }
   }
 
   Future<void> _onLoadMessages(

@@ -7,8 +7,9 @@ import 'package:vibematch/features/chat/data/models/message_model.dart';
 import 'package:vibematch/features/chat/domain/entities/message_entity.dart';
 
 class MessagesRemoteDataSource {
-  final String baseUrl = 'http://192.168.102.140:3000';
+  final String baseUrl;
   final _storage = FlutterSecureStorage();
+  MessagesRemoteDataSource({required this.baseUrl});
 
   Future<DailyQuestionModel> fetchDailyQuestion(
       {required String conversationId}) async {

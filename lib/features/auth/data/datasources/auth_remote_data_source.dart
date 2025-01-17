@@ -5,11 +5,13 @@ import 'package:http/http.dart' as http;
 import 'package:vibematch/features/auth/data/models/user_model.dart';
 
 class AuthRemoteDataSource {
-  final String baseUrl = "http://192.168.102.140:3000/auth";
+  final String baseUrl;
+
+  AuthRemoteDataSource({required this.baseUrl});
 
   Future<UserModel> login(
       {required String email, required String password}) async {
-    final response = await http.post(Uri.parse('$baseUrl/login'),
+    final response = await http.post(Uri.parse('$baseUrl/auth/login'),
         body: jsonEncode({'email': email, 'password': password}),
         headers: {'Content-Type': 'application/json'});
     return UserModel.fromJson(jsonDecode(response.body)['user']);
@@ -19,7 +21,7 @@ class AuthRemoteDataSource {
       {required String username,
       required String email,
       required String password}) async {
-    final response = await http.post(Uri.parse('$baseUrl/register'),
+    final response = await http.post(Uri.parse('$baseUrl/auth/register'),
         body: jsonEncode(
             {'username': username, 'email': email, 'password': password}),
         headers: {'Content-Type': 'application/json'});

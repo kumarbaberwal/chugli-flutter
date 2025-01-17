@@ -5,8 +5,9 @@ import 'package:http/http.dart' as http;
 import 'package:vibematch/features/contacts/data/models/contacts_model.dart';
 
 class ContactsRemoteDataSource {
-  final String baseUrl = 'http://192.168.102.140:3000';
+  final String baseUrl;
   final _storage = FlutterSecureStorage();
+  ContactsRemoteDataSource({required this.baseUrl});
 
   Future<void> addContact({required String email}) async {
     final token = await _storage.read(key: 'token');

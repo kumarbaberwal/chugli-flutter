@@ -161,13 +161,17 @@ class _ConversationPageState extends State<ConversationPage> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(
+        onPressed: () async {
+          final contactsBloc = BlocProvider.of<ContactsBloc>(context);
+          var res = await Navigator.push(
             context,
             MaterialPageRoute(
               builder: (context) => ContactsPage(),
             ),
           );
+          if (res == null) {
+            contactsBloc.add(FetchContactsEvent());
+          }
         },
         backgroundColor: DefaultColors.buttonColor,
         child: Icon(Icons.contacts),

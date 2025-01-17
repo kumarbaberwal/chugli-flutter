@@ -40,8 +40,8 @@ class _ContactsPageState extends State<ContactsPage> {
               MaterialPageRoute(
                 builder: (context) => ChatPage(
                   conversationId: state.conversationId,
-                  mate: state.contactName,
-                  image: state.contactImage,
+                  mate: state.contactEntity.username,
+                  image: state.contactEntity.contactImage,
                 ),
               ),
             );
@@ -80,8 +80,7 @@ class _ContactsPageState extends State<ContactsPage> {
                       BlocProvider.of<ContactsBloc>(context).add(
                         CheckOrCreateConversationsEvent(
                           contactId: contact.id,
-                          contactName: contact.username,
-                          contactImage: contact.contactImage,
+                          contactEntity: contact,
                         ),
                       );
                     },

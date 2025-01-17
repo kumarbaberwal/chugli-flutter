@@ -1,3 +1,5 @@
+import 'package:vibematch/features/contacts/domain/entities/contact_entity.dart';
+
 class AddContactEvent extends ContactsEvent {
   final String email;
 
@@ -6,16 +8,16 @@ class AddContactEvent extends ContactsEvent {
 
 class CheckOrCreateConversationsEvent extends ContactsEvent {
   final String contactId;
-  final String contactName;
-  final String contactImage;
+  final ContactEntity contactEntity;
 
   CheckOrCreateConversationsEvent({
     required this.contactId,
-    required this.contactName,
-    required this.contactImage,
+    required this.contactEntity,
   });
 }
 
 abstract class ContactsEvent {}
 
 class FetchContactsEvent extends ContactsEvent {}
+
+class FetchRecentContactsEvent extends ContactsEvent {}

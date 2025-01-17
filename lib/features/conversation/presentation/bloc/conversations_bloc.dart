@@ -9,8 +9,9 @@ import 'package:vibematch/features/conversation/presentation/bloc/conversations_
 class ConversationsBloc extends Bloc<ConversationsEvent, ConversationsState> {
   final FetchConversationsUseCase fetchConversationsUseCase;
   final SocketService _socketService = SocketService();
-  ConversationsBloc({required this.fetchConversationsUseCase})
-      : super(ConversationsInitial()) {
+  ConversationsBloc({
+    required this.fetchConversationsUseCase,
+  }) : super(ConversationsInitial()) {
     on<FetchConvesationsEvent>(_onFetchConversations);
     _initializeSocketListeners();
   }

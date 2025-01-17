@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vibematch/core/theme.dart';
 import 'package:vibematch/features/chat/presentation/pages/chat_page.dart';
+import 'package:vibematch/features/contacts/presentation/bloc/contacts_bloc.dart';
 import 'package:vibematch/features/conversation/presentation/bloc/conversations_bloc.dart';
 import 'package:vibematch/features/conversation/presentation/bloc/conversations_event.dart';
 import 'package:vibematch/features/conversation/presentation/bloc/conversations_state.dart';
 
+import '../../../contacts/presentation/bloc/contacts_event.dart';
 import '../../../contacts/presentation/pages/contacts_page.dart';
 
 class ConversationPage extends StatefulWidget {
@@ -177,6 +179,7 @@ class _ConversationPageState extends State<ConversationPage> {
   void initState() {
     super.initState();
     BlocProvider.of<ConversationsBloc>(context).add(FetchConvesationsEvent());
+    BlocProvider.of<ContactsBloc>(context).add(FetchRecentContactsEvent());
   }
 
   Widget _buildMessageTile(

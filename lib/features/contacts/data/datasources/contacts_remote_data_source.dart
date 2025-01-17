@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
@@ -31,7 +30,6 @@ class ContactsRemoteDataSource {
       Uri.parse('$baseUrl/contacts'),
       headers: {'Authorization': 'Bearer $token'},
     );
-    log(response.statusCode.toString());
 
     if (response.statusCode == 200) {
       List data = jsonDecode(response.body);
@@ -39,6 +37,22 @@ class ContactsRemoteDataSource {
       return data.map((json) => ContactsModel.fromJson(json)).toList();
     } else {
       throw Exception('Failed to fetch contacts');
+    }
+  }
+
+  Future<List<ContactsModel>> fetchRecentContacts() async {
+    final token = await _storage.read(key: 'token');
+    final response = await http.get(
+      Uri.parse('$baseUrl/contacts/recent'),
+      headers: {'Authorization': 'Bearer $token'},
+    );
+
+    if (response.statusCode == 200) {
+      List data = jsonDecode(response.body);
+
+      return data.map((json) => ContactsModel.fromJson(json)).toList();
+    } else {
+      throw Exception('Failed to fetch recent contacts');
     }
   }
 }

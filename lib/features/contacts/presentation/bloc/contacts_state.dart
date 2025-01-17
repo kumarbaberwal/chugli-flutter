@@ -21,12 +21,16 @@ abstract class ContactsState {}
 
 class ConversationsReady extends ContactsState {
   final String conversationId;
-  final String contactName;
-  final String contactImage;
+  final ContactEntity contactEntity;
 
   ConversationsReady({
     required this.conversationId,
-    required this.contactName,
-    required this.contactImage,
+    required this.contactEntity,
   });
+}
+
+class RecentContactsLoaded extends ContactsState {
+  final List<ContactEntity> recentContacts;
+
+  RecentContactsLoaded({required this.recentContacts});
 }

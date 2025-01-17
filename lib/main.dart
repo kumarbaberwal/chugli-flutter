@@ -18,6 +18,7 @@ import 'package:vibematch/features/contacts/data/datasources/contacts_remote_dat
 import 'package:vibematch/features/contacts/data/repositories/contacts_repository_impl.dart';
 import 'package:vibematch/features/contacts/domain/usecases/add_contact_use_case.dart';
 import 'package:vibematch/features/contacts/domain/usecases/fetch_contacts_use_case.dart';
+import 'package:vibematch/features/contacts/domain/usecases/fetch_recent_contacts_use_case.dart';
 import 'package:vibematch/features/contacts/presentation/bloc/contacts_bloc.dart';
 import 'package:vibematch/features/conversation/data/datasources/conversation_remote_data_source.dart';
 import 'package:vibematch/features/conversation/data/repositories/conversation_repository_impl.dart';
@@ -92,13 +93,16 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => ContactsBloc(
-              fetchContactsUseCase: FetchContactsUseCase(
-                  contactsRepository: contactsRepositoryImpl),
-              addContactUseCase:
-                  AddContactUseCase(contactsRepository: contactsRepositoryImpl),
-              checkOrCreateConversationsUseCase:
-                  CheckOrCreateConversationsUseCase(
-                      conversationsRepository: conversationRepositoryImpl)),
+            fetchContactsUseCase: FetchContactsUseCase(
+                contactsRepository: contactsRepositoryImpl),
+            addContactUseCase:
+                AddContactUseCase(contactsRepository: contactsRepositoryImpl),
+            checkOrCreateConversationsUseCase:
+                CheckOrCreateConversationsUseCase(
+                    conversationsRepository: conversationRepositoryImpl),
+            fetchRecentContactsUseCase: FetchRecentContactsUseCase(
+                contactsRepository: contactsRepositoryImpl),
+          ),
         ),
       ],
       child: MaterialApp(
